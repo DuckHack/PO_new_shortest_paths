@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Path implements PathInterface {
     @Override
@@ -38,7 +38,7 @@ public class Path implements PathInterface {
 
     private Graph getBuildedGraph(String fileName) {
         List<String> extractedStrings = new ArrayList<>(100);
-        File file = new File(System.getProperty("user.dir") + "\\" + fileName);
+        File file = new File(System.getProperty("user.dir") + "/" + fileName);
         try (BufferedReader fileBuffer = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = fileBuffer.readLine()) != null) {
@@ -51,10 +51,10 @@ public class Path implements PathInterface {
         List<String> interiorOfNodes = getCodes(extractedStrings);
         Map<Integer, ArrayList<Integer>> nodes = getNodes(extractedStrings);
 
+        System.out.println(nodes);
         System.out.println(interiorOfNodes);
         return null;
     }
-
 
     private List<String> getCodes(List<String> readeFile) {
         List<String> codesList = new ArrayList<>(readeFile.size());
@@ -69,12 +69,36 @@ public class Path implements PathInterface {
         return codesList;
     }
 
-    private Map<Integer, ArrayList<Integer>> getNodes(List<String> readeFile) {
-        return null;
+    private static int integerfrmbinary(String str) {
+        double j = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '1') {
+                j = j + Math.pow(2, str.length() - 1 - i);
+            }
+        }
+        return (int) j;
     }
 
+    private Map<Integer, ArrayList<Integer>> getNodes(List<String> readeFile) {
+        Map<Integer, ArrayList<Integer>> nodeMap = new HashMap<>();
+        int index = 0;
+        for (String line : readeFile) {
+            if (line.matches("[01\\s]+")) {
+                ArrayList<Integer> tab = new ArrayList<>();
+                for (String slit : line.split("\\s")) {
+                    tab.add(integerfrmbinary(slit));
+                }
+                if (index > 0 && tab.size() >= 2) {
+                    tab.remove(0);
+                    tab.remove(0);
+                }
+                nodeMap.put(index++, tab);
+            }
+        }
+        return nodeMap;
+    }
 
-    //    Decompression code
+    // Decompression code
     private String getDecompressedNode(String code) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = code.length() - 1; i >= 0; i--) {
