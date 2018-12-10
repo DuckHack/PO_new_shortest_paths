@@ -95,6 +95,7 @@ public class Path implements PathInterface {
                 nodeMap.put(index++, tab);
             }
         }
+        nodeMap.remove(0);
         return nodeMap;
     }
 
