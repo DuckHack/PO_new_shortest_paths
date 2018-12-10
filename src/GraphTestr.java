@@ -41,7 +41,11 @@ public class GraphTestr {
     }
 
     private void graphBuildingTest() {
-        path.buildGraph("graphData.txt");
+       Graph graph = path.buildGraph("graphData.txt");
+
+       String shortestPath = path.findPath(graph, 1, 6);
+       System.out.println("shortestPath -> " + shortestPath);
+       System.out.println("path.getPathString -> " + path.getPathString(graph, 1, 6));
     }
 
     private void searchPathTest() {
@@ -63,8 +67,8 @@ public class GraphTestr {
 
         Graph graph = new Graph(nodes, interiorOfNodes);
 
-        String shortestPath = path.findPath(graph, 1, 6);
-        System.out.println("shortestPath -> " + shortestPath);
-        System.out.println("path.getPathString -> " + path.getPathString(graph, 1, 6));
+        // String shortestPath = path.findPath(graph, 1, 6);
+        // System.out.println("shortestPath -> " + shortestPath);
+        // System.out.println("path.getPathString -> " + path.getPathString(graph, 1, 6));
     }
 }

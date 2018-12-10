@@ -49,11 +49,11 @@ public class Path implements PathInterface {
         }
 
         List<String> interiorOfNodes = getCodes(extractedStrings);
-        Map<Integer, ArrayList<Integer>> nodes = getNodes(extractedStrings);
+        Map<Integer, List<Integer>> nodes = getNodes(extractedStrings);
 
         System.out.println(nodes);
         System.out.println(interiorOfNodes);
-        return null;
+        return new Graph(nodes, interiorOfNodes);
     }
 
     private List<String> getCodes(List<String> readeFile) {
@@ -79,8 +79,8 @@ public class Path implements PathInterface {
         return (int) j;
     }
 
-    private Map<Integer, ArrayList<Integer>> getNodes(List<String> readeFile) {
-        Map<Integer, ArrayList<Integer>> nodeMap = new HashMap<>();
+    private Map<Integer, List<Integer>> getNodes(List<String> readeFile) {
+        Map<Integer, List<Integer>> nodeMap = new HashMap<>();
         int index = 0;
         for (String line : readeFile) {
             if (line.matches("[01\\s]+")) {
